@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 MAINTAINER KUDO Shunsuke
 
 # ARG PROXY=
@@ -19,11 +19,9 @@ RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y \
     vim \
     wget \
     whois \
+    x2goserver \
+    x2goserver-xsession \
     && rm -rf /var/lib/apt/lists/*
-
-
-RUN add-apt-repository ppa:x2go/stable && \
-    apt update && apt install -y x2goserver x2goserver-xsession
 
 ARG USR=dev
 RUN useradd -m -p `echo "$USR" | mkpasswd -s -m sha-512` -s /bin/bash $USR && gpasswd -a $USR sudo
