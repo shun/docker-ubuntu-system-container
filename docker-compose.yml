@@ -1,0 +1,9 @@
+version: "2"
+
+services:
+  ubuntu-system-container:
+    build: .
+    image: kudoshunsuke/docker-ubuntu-system-container:18.04
+    ports:
+    - "10022:22"
+    privileged: true
