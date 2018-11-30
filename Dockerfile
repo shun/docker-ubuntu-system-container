@@ -13,6 +13,8 @@ RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y \
     fcitx-mozc \
     iproute2 \
     language-pack-ja \
+    openssh-server \
+    rsyslog \
     software-properties-common \
     sudo \
     systemd \
@@ -23,8 +25,10 @@ RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y \
     x2goserver-xsession \
     && rm -rf /var/lib/apt/lists/*
 
-ARG USR=dev
-RUN useradd -m -p `echo "$USR" | mkpasswd -s -m sha-512` -s /bin/bash $USR && gpasswd -a $USR sudo
+RUN sed -i.bak "s;#PasswordAuthentication yes;PasswordAuthentication yes;g" /etc/ssh/sshd_config
+
+ARG WORKUSR=dev
+RUN useradd -m -p `echo "$USR" | mkpasswd -s -m sha-512` -s /bin/bash $WORKUSR && gpasswd -a $WORKUSR sudo
 
 CMD ["/sbin/init"]
 
