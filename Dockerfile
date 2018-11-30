@@ -28,7 +28,7 @@ RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y \
 RUN sed -i.bak "s;#PasswordAuthentication yes;PasswordAuthentication yes;g" /etc/ssh/sshd_config
 
 ARG WORKUSR=dev
-RUN useradd -m -p `echo "$USR" | mkpasswd -s -m sha-512` -s /bin/bash $WORKUSR && gpasswd -a $WORKUSR sudo
+RUN useradd -m -p `echo "$WORKUSR" | mkpasswd -s -m sha-512` -s /bin/bash $WORKUSR && gpasswd -a $WORKUSR sudo
 
 CMD ["/sbin/init"]
 
